@@ -40,7 +40,21 @@ const resolvers = {
             return {token, user: newUser}
 
 
-    }
+    },  saveBook: async(parent, {input}, context) => {
+        if(context.user){
+            const user = await User.findOneAndUpdate(
+                {_id: context.user._id},
+                {$addToSet: {savedBooks: input}},
+                {new: true, runValidators: true}
+            )
+
+            return user;
+        }
+
+        throw new AuthenticationError("You are not logged in.")
+    },
+
+
 
 }
 
