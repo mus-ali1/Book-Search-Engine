@@ -53,9 +53,19 @@ const resolvers = {
 
         throw new AuthenticationError("You are not logged in.")
     },
+    removeBook: async(parent, { bookId }, context) => {
+        if(context.user) {
+            const user = User.findOneAndUpdate(
+                { _id: context.user._id},
+                {$pull: {savedBooks: {bookId}}},
+                {new: true}
+            );
 
+            return user;
+        }
 
-
+        throw new AuthenticationError("You are not logged in.")
+    }
 }
 
-}
+};
