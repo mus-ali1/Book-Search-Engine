@@ -34,4 +34,8 @@ input BookInput {
     link: String
 }
 
+type Query {
+    me: User
+}
+
 `;
