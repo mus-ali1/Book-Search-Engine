@@ -25,4 +25,13 @@ type Auth {
     user: User
 }
 
+input BookInput {
+    bookId: ID
+    authors: [String]
+    description: String
+    title: String
+    image: String
+    link: String
+}
+
 `;
