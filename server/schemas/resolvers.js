@@ -11,6 +11,25 @@ const resolvers = {
             }
             throw new AuthenticationError("You must be logged in!");
         }
+    },
+    Mutation: {
+        login: async (parent, {email, password}) => {
+            const user = await User.findOne({email});
+
+            if(!user){
+                throw new AuthenticationError("Login details incorrect.");
+            }
+
+            const correctPw = await user.isCorrectPassword(password);
+
+            if(!correctPw){
+                throw new AuthenticationError("Login details incorrect.");
+            }
+
+            const token = signToken(user);
+            return {token, user};
+        },
+
 
     }
 
